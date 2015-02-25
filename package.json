@@ -1,0 +1,27 @@
+{
+  "name": "plite2",
+  "version": "1.0.0",
+  "description": "Tiny, light-weight JavaScript promises.",
+  "main": "plite2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noematics/plite2.git"
+  },
+  "keywords": [
+    "promise",
+    "browserify",
+    "client"
+  ],
+  "contributors": [
+    "Michele Piccirillo (https://github.com/lordofthelake)",
+    "Chris Davies (https://github.com/chrisdavies)"
+  ],
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/noematics/plite2/issues"
+  },
+  "homepage": "https://github.com/noematics/plite2"
+}

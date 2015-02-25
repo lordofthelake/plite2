@@ -1,78 +1,93 @@
-# plite
+# plite2
 
-Tiny, light-weight JavaScript promises
+Tiny, light-weight JavaScript promises. Fork of [Chris Davies' Plite](https://github.com/chrisdavies/plite), to make it compatible with NPM/Browserify and allow combination of multiple promises (`Plite.all()`). 
 
-## Stats
+Note that Alite has been removed from the package. Please refer to the original repo if you need that.
 
-size: 383 bytes gzipped and minified
-      (pretty darn small compared to the others)
-
-perf: http://jsperf.com/plite/7
-      (pretty darn good compared to the others) 
 
 ## Usage
-Include plite.js
+
+Require `plite2`
+
+```javascript
+var Plite = require('plite2');
+```
 
 Create a promise:
 
-    var p = new Plite();
+```javascript
+var p = new Plite();
+```
 
 Resolve a promise:
 
-    p.resolve('Hey, that was successful!');
+```javascript
+p.resolve('Hey, that was successful!');
+```
 
 Reject a promise:
-
-    p.reject('Utter failure.');
+```javascript
+p.reject('Utter failure.');
+```
 
 Chain stuff along:
 
-    p.then(function (msg) {
-        return msg + ' on ' + new Date().toString();
-    }).then(function (msg) {
-        alert('GOOD: ' + msg);
-    }).catch(function (err) {
-        alert('ERR: ' + err);
-    }).finally(function () {
-        alert('All done!');
-    });
+```javascript
+p.then(function (msg) {
+    return msg + ' on ' + new Date().toString();
+}).then(function (msg) {
+    alert('GOOD: ' + msg);
+}).catch(function (err) {
+    alert('ERR: ' + err);
+}).finally(function () {
+    alert('All done!');
+});
+```
+
+Combine promises:
+
+```javascript
+var p1 = new Plite();
+var p2 = new Plite();
+
+setTimeout(function () {
+  p1.resolve();
+}, 1000);
+
+setTimeout(function () {
+  p2.resolve();
+}, 2000);
+
+Plite.all([p1, p2]).then(function () {
+  alert("All done!");
+});
+```
 
 ## Limitations
 This is a very simple implementation. It is intended to be used to chain promises, resolve, and reject. It really isn't intended for any other use. It does what I need a promise to do, and no more...
 
-## Alite
-Alite is an example usage of Plite. It's a basic ajax library that uses Plite promises.
-
-Here's the basic Alite usage:
-
-    // Get and delete take the URL to be retrieved or deleted.
-    Alite.get('/api/foos').then(function (result) {
-        alert('GOT: ' + JSON.stringify(result.data))
-    });
-
-
-    // Put and post take a url and the object that will
-    // be sent to the server as JSON.
-    Alite.put('/api/foos/23', {
-        name: 'Turd Furguson'
-    }).then(function (result) { 
-        // Do stuff
-    }).catch(function (result) {
-        handleErrorResponse(result.data);
-    });
-
-There are four methods: get, put, post, and delete. They return a promise, and their callbacks receive an object that looks like this:
-
-    {
-       // The raw request/response object
-       request: { status: ... },
-       
-       // The response data, parsed as JSON, if it was a 
-       // JSON response, otherwise this is just the raw
-       // response string (text, html, or whatever).
-       data: { ... }
-    }
 
 ## License
-None. Do whatever you want with this.
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 

@@ -73,14 +73,34 @@ function Plite() {
         me.catch = me.finally = function (fn) {
             result = fn(result);
             return this;
-        }
+        };
     }
 
-    return me = {
+    return (me = {
         'catch': _catch,
         'finally': _finally,
         then: then,
         reject: reject,
         resolve: resolve
-    }
+    });
 }
+
+Plite.all = function (promises) {
+    var queueLength = promises.length;
+    var allPromises = new Plite();
+    if(queueLength === 0)
+        allPromises.resolve();
+    else {
+        for(var i = 0; i < promises.length; ++i) {
+            promises[i].then(function () {
+                queueLength--;
+                if(queueLength === 0)
+                    allPromises.resolve();
+            });
+        }
+    }
+    
+    return allPromises;
+};
+
+module.exports = Plite;
